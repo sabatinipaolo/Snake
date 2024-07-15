@@ -20,6 +20,8 @@ public class Main extends JFrame {
 
             partita = new Partita();
             add(partita);  //aggiunge la partita al JFrame
+            setVisible(true);
+
             partita.gioca();
         } while (utenteVuoleFareUnAltra(partita));
 
