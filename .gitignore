@@ -32,6 +32,7 @@ bin/
 
 ### paolo ###
 *.class
+/.idea/
 /.idea/misc.xml
 /SnakeForVale.iml
 /.idea/vcs.xml
