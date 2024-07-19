@@ -1,5 +1,6 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Point;
 import java.util.LinkedList;
 
 public class Serpente extends Thread implements KeyListener {
@@ -10,15 +11,15 @@ public class Serpente extends Thread implements KeyListener {
     //un domani ne mettiamo più di uno e abbiamo delle race condition (la mela !) ?
 
     private boolean vivo;
-    private LinkedList<Punto> corpo; //TODO : provare una lista di Quadratini invece di una lista di coordinate dei quadratini
-    private Punto direzione;
+    private LinkedList<Point> corpo; //TODO : provare una lista di Quadratini invece di una lista di coordinate dei quadratini
+    private Point direzione;
     private CampoDiGioco campo;
 
     //TODO: trasformare in enum ?
-    private static final Punto NORD = new Punto(-1, 0);
-    private static final Punto SUD = new Punto(1, 0);
-    private static final Punto EST = new Punto(0, 1);
-    private static final Punto OVEST = new Punto(0, -1);
+    private static final Point NORD = new Point(-1, 0);
+    private static final Point SUD = new Point(1, 0);
+    private static final Point EST = new Point(0, 1);
+    private static final Point OVEST = new Point(0, -1);
 
     public Serpente(CampoDiGioco campo) {
         //Un serpente deve vivere in un campo ...//TODO: coupling ?
@@ -28,7 +29,7 @@ public class Serpente extends Thread implements KeyListener {
         vivo = true;
         direzione = NORD;
 
-        corpo = new LinkedList<Punto>();
+        corpo = new LinkedList<Point>();
 
         inizializzaIlCorpoDelSerpente();
 
@@ -36,26 +37,26 @@ public class Serpente extends Thread implements KeyListener {
     }
 
     private void inizializzaIlCorpoDelSerpente() {
-        Punto punto;
+        Point punto;
 
         // inizializza un serpente lungo 3 quadratini
-        punto = new Punto(19, 0);
+        punto = new Point(19, 0);
         corpo.addFirst(punto);
         campo.getQuadratino(punto).setToSerpente();  // viola la legge di Demetra?
 
-        punto = new Punto(18, 0);
+        punto = new Point(18, 0);
         corpo.addFirst(punto);
         campo.getQuadratino(punto).setToSerpente();
 
-        punto = new Punto(17, 0);
+        punto = new Point(17, 0);
         corpo.addFirst(punto);
         campo.getQuadratino(punto).setToSerpente();
     }
 
     public void avanza() {
-        Punto posTesta = corpo.getFirst();
+        Point posTesta = corpo.getFirst();
 
-        Punto nuovaPos = Punto.somma(posTesta, direzione);
+        Point nuovaPos = somma(posTesta, direzione);
 
 
         switch (campo.getQuadratino(nuovaPos).getTipo()) {
@@ -82,7 +83,24 @@ public class Serpente extends Thread implements KeyListener {
 
         campo.repaint();
     }
+    public static Point somma(Point p1, Point p2) {
+        int x = p1.x + p2.x;
+        int y = p1.y + p2.y;
 
+        //TODO : rendere più elegante ...
+        if (x < 0) {
+            x = x + 20;
+        } else if (x > 19) {
+            x = x - 20;
+        }
+
+        if (y < 0) {
+            y = y + 20;
+        } else if (y > 19) {
+            y = y - 20;
+        }
+        return (new Point(x, y));
+    }
     public void run() {
         while (vivo) {
             try {
