@@ -9,7 +9,7 @@ public class CampoDiGioco extends JPanel {
         for (int r = 0; r < 20; r++)
             for (int c = 0; c < 20; c++) {
                 matrice[r][c] = new Quadratino(); //di default è un quadratino di prato
-                add(matrice[r][c]).setLocation(r, c); //aggiunge al JPanel il quadratino alle coordinate  r,c
+                add(matrice[r][c]);
             }
     }
 
