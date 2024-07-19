@@ -1,6 +1,7 @@
 import javax.swing.JPanel;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.util.Random;
 
 public class CampoDiGioco extends JPanel {
     private Quadratino[][] matrice = new Quadratino[20][20];  //TODO: è ridondante? potrei usare direttamente il Gridlayout
@@ -20,6 +21,13 @@ public class CampoDiGioco extends JPanel {
     }
 
     public void generaCibo() {
-        new Cibo(this);
+        Random random = new Random();
+        Point puntoACaso;
+        do {
+            puntoACaso = new Point(random.nextInt(19), random.nextInt(19)); //TODO: generalizzare
+        }
+        while (getQuadratino(puntoACaso).getTipo() != Quadratino.PRATO);
+
+        getQuadratino(puntoACaso).setToCibo();  //viola la legge di demetra?
     }
 }
