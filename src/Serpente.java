@@ -57,10 +57,10 @@ public class Serpente extends Thread implements KeyListener {
         Point posTesta = corpo.getFirst();
 
         Point nuovaPos = somma(posTesta, direzione);
+
         //controllo cosa c'è nella nuova posizione
         switch (campo.getQuadratino(nuovaPos).getTipo()) {
             case Quadratino.CIBO -> {
-                System.out.print("GnamGnam ");
                 campo.generaCibo();
             }
             case Quadratino.PRATO -> {
@@ -68,7 +68,6 @@ public class Serpente extends Thread implements KeyListener {
                 corpo.removeLast();
             }
             case Quadratino.SERPENTE -> {
-                System.out.print("MORTOOOOOOOOOO ");
                 vivo = false;
             }
             default -> {
